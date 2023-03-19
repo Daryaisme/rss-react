@@ -4,6 +4,10 @@ import About from './routes/about/About';
 import Error from './routes/error/Error';
 import Layout from './layout/Layout';
 import Main from './routes/main/Main';
+import { productType } from './types';
+import { generateProducts } from './generateProduct';
+
+const allProducts: productType[] = generateProducts();
 
 const router = createBrowserRouter([
   {
@@ -12,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Main />,
+        element: <Main products={allProducts} />,
       },
       {
         path: '/about',
