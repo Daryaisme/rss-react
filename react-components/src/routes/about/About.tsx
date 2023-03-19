@@ -3,7 +3,7 @@ import React from 'react';
 
 class About extends React.Component {
   render() {
-    return <div>dmkmdsed</div>;
+    return <div>about</div>;
   }
 }
 
