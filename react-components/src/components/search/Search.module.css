@@ -1,0 +1,11 @@
+.container {
+  width: calc(70% - 50px);
+  height: 40px;
+  border: 1px lightgray solid;
+  background-image: url(../../images/glass.png);
+  background-size: 36px 36px;
+  background-repeat: no-repeat;
+  background-position-x: 7px;
+  background-position-y: 2px;
+  padding-left: 50px;
+}

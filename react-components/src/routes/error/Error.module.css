@@ -1,0 +1,28 @@
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.digital {
+  font-size: 66px;
+  font-weight: 900;
+  letter-spacing: 5px;
+}
+.link {
+  font-size: 20px;
+}
+.link a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.493);
+}
+.link a:hover {
+  color: rgb(0, 0, 0);
+  transition: all 0.3s ease-in-out;
+}
