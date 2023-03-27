@@ -18,6 +18,12 @@ class Header extends React.Component {
         >
           About
         </NavLink>
+        <NavLink
+          to="/form"
+          className={(navData) => (navData.isActive ? styles.link_active : styles.link_passive)}
+        >
+          Form
+        </NavLink>
       </div>
     );
   }
