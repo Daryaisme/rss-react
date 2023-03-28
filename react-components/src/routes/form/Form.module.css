@@ -47,12 +47,15 @@ input[type = submit]:hover {
   margin: 0;
 }
 .avatar {
+  position: relative;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   width: 100%;
 }
 .avatar input {
   position: absolute;
+  top: 18px;
   z-index: -1;
 }
 .avatar label {
@@ -68,6 +71,14 @@ input[type = submit]:hover {
   border-color: #000000;
   transition: all 0.3s ease-in-out;
 }
+.avatar > p,
+.list > p {
+  margin: 0;
+  margin-top: 5px;
+}
 .cards {
   width: 100%;
+}
+.error {
+  color: #ff0000;
 }

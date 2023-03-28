@@ -16,3 +16,13 @@ export type cardType = {
   gender: string;
   photoImg: string;
 };
+
+export type cardTypeError = {
+  name: boolean;
+  surname: boolean;
+  birthday: boolean;
+  country: boolean;
+  character: boolean;
+  gender: boolean;
+  photoImg: boolean;
+};
