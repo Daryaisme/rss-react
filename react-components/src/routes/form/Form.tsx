@@ -1,7 +1,7 @@
 import styles from './Form.module.css';
-import React, { createRef, Key } from 'react';
-import no_photo from '../../images/no-photo.png';
+import React, { createRef } from 'react';
 import { cardType } from '../../types';
+import Card from '../../components/card/Card';
 
 type FormState = {
   cards: cardType[];
@@ -123,6 +123,20 @@ class Form extends React.Component<object, FormState> {
           </fieldset>
           <input type="submit" value="Submit" />
         </form>
+        <div className={styles.cards}>
+          {this.state.cards.map((el, i) => (
+            <Card
+              key={i}
+              name={el.name}
+              surname={el.surname}
+              birthday={el.birthday}
+              country={el.country}
+              character={el.character}
+              gender={el.gender}
+              photoImg={el.photoImg}
+            />
+          ))}
+        </div>
       </div>
     );
   }
