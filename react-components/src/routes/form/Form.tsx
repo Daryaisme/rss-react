@@ -2,10 +2,12 @@ import styles from './Form.module.css';
 import React, { createRef, RefObject } from 'react';
 import { cardType, cardTypeError } from '../../types';
 import Card from '../../components/card/Card';
+import Popup from '../../components/popup/Popup';
 
 type FormState = {
   cards: cardType[];
   error: cardTypeError;
+  saved: boolean;
 };
 
 class Form extends React.Component<object, FormState> {
@@ -23,6 +25,7 @@ class Form extends React.Component<object, FormState> {
         gender: false,
         photoImg: false,
       },
+      saved: false,
     };
   }
 
@@ -110,7 +113,12 @@ class Form extends React.Component<object, FormState> {
           gender: false,
           photoImg: false,
         },
+        saved: true,
       });
+
+      setTimeout(() => {
+        this.setState({ ...this.state, saved: false });
+      }, 2000);
 
       this.formRef.current?.reset();
     }
@@ -119,6 +127,7 @@ class Form extends React.Component<object, FormState> {
   render() {
     return (
       <div className={styles.container}>
+        <div>{this.state.saved && <Popup message="Saved" />}</div>
         <p className={styles.title}> Form </p>
         <form action="#" ref={this.formRef} onSubmit={this.handleSubmit}>
           <fieldset>
