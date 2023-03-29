@@ -1,5 +1,5 @@
 import styles from './Form.module.css';
-import React, { createRef } from 'react';
+import React, { createRef, RefObject } from 'react';
 import { cardType, cardTypeError } from '../../types';
 import Card from '../../components/card/Card';
 
@@ -34,20 +34,12 @@ class Form extends React.Component<object, FormState> {
   genderRef = createRef<HTMLFieldSetElement>();
   imageRef = createRef<HTMLInputElement>();
 
-  getCheckboxes = (): string[] => {
-    return Array.from(this.characterRef.current?.children as HTMLCollection)
+  getInputs = (ref: RefObject<HTMLFieldSetElement>): string[] => {
+    return Array.from(ref.current?.children as HTMLCollection)
       .filter((el) => el.tagName === 'DIV')
       .map((el) => Array.from(el.children as HTMLCollection)[0])
       .filter((input) => (input as HTMLInputElement).checked)
       .map((input) => (input as HTMLInputElement).defaultValue);
-  };
-
-  getRadios = (): string => {
-    return Array.from(this.genderRef.current?.children as HTMLCollection)
-      .filter((el) => el.tagName === 'DIV')
-      .map((el) => Array.from(el.children as HTMLCollection)[0])
-      .filter((input) => (input as HTMLInputElement).checked)
-      .map((input) => (input as HTMLInputElement).defaultValue)[0];
   };
 
   getFile = (): FileList | null | undefined => {
@@ -56,39 +48,22 @@ class Form extends React.Component<object, FormState> {
 
   isValid = (): boolean => {
     const currentErrors: cardTypeError = {
-      name: this.isValidName(),
-      surname: this.isValidSurname(),
+      name: this.isValidName(this.nameRef.current?.value as string),
+      surname: this.isValidName(this.surnameRef.current?.value as string),
       birthday: this.isValidBirthday(),
-      country: this.isValidCountry(),
-      character: this.isValidCharacter(),
-      gender: this.isValidGender(),
-      photoImg: this.isValidPhoto(),
+      country: this.isValidString(this.countryRef.current?.value as string),
+      character: this.isValidString(this.getInputs(this.characterRef)),
+      gender: this.isValidString(this.getInputs(this.genderRef)[0]),
+      photoImg: this.isValidPhoto(this.getFile() as FileList),
     };
 
     this.setState({ ...this.state, error: currentErrors });
 
-    const bool =
-      this.state.error.name &&
-      this.state.error.surname &&
-      this.state.error.birthday &&
-      this.state.error.country &&
-      this.state.error.character &&
-      this.state.error.gender &&
-      this.state.error.photoImg;
-
-    return bool;
+    return !Object.values(currentErrors).filter((er) => er).length;
   };
 
-  isValidName = (): boolean => {
-    const value = this.nameRef.current?.value || '';
-
-    return !(value.trim().length >= 3 && value[0] == value[0].toUpperCase());
-  };
-
-  isValidSurname = (): boolean => {
-    const value = this.surnameRef.current?.value || '';
-
-    return !(value.trim().length >= 3 && value[0] === value[0].toUpperCase());
+  isValidName = (str: string): boolean => {
+    return !(str.trim().length >= 3 && str[0] == str[0].toUpperCase());
   };
 
   isValidBirthday = (): boolean => {
@@ -98,25 +73,11 @@ class Form extends React.Component<object, FormState> {
     return !(dateValue && dateValue < new Date());
   };
 
-  isValidCountry = (): boolean => {
-    return !((this.countryRef.current?.value as string).length > 0);
+  isValidString = (str: string | string[]): boolean => {
+    return !(str && str.length > 0);
   };
 
-  isValidCharacter = (): boolean => {
-    const checkboxes = this.getCheckboxes();
-
-    return !(checkboxes.length > 0);
-  };
-
-  isValidGender = (): boolean => {
-    const radios = this.getRadios();
-
-    return !radios;
-  };
-
-  isValidPhoto = (): boolean => {
-    const file = this.getFile();
-
+  isValidPhoto = (file: FileList): boolean => {
     return file?.length ? false : true;
   };
 
@@ -124,8 +85,8 @@ class Form extends React.Component<object, FormState> {
     e.preventDefault();
 
     if (this.isValid()) {
-      const checkboxes = this.getCheckboxes();
-      const radios = this.getRadios();
+      const checkboxes = this.getInputs(this.characterRef);
+      const radios = this.getInputs(this.genderRef)[0];
 
       const file = this.getFile();
 
