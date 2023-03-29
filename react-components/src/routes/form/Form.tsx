@@ -26,6 +26,7 @@ class Form extends React.Component<object, FormState> {
     };
   }
 
+  formRef = createRef<HTMLFormElement>();
   nameRef = createRef<HTMLInputElement>();
   surnameRef = createRef<HTMLInputElement>();
   birthdayRef = createRef<HTMLInputElement>();
@@ -85,9 +86,6 @@ class Form extends React.Component<object, FormState> {
     e.preventDefault();
 
     if (this.isValid()) {
-      const checkboxes = this.getInputs(this.characterRef);
-      const radios = this.getInputs(this.genderRef)[0];
-
       const file = this.getFile();
 
       const card: cardType = {
@@ -95,12 +93,26 @@ class Form extends React.Component<object, FormState> {
         surname: this.surnameRef.current?.value as string,
         birthday: this.birthdayRef.current?.value as string,
         country: this.countryRef.current?.value as string,
-        character: checkboxes,
-        gender: radios,
+        character: this.getInputs(this.characterRef),
+        gender: this.getInputs(this.genderRef)[0],
         photoImg: file ? URL.createObjectURL(file[0]) : '',
       };
 
-      this.setState({ cards: [...this.state.cards, card] });
+      this.setState({
+        ...this.state,
+        cards: [...this.state.cards, card],
+        error: {
+          name: false,
+          surname: false,
+          birthday: false,
+          country: false,
+          character: false,
+          gender: false,
+          photoImg: false,
+        },
+      });
+
+      this.formRef.current?.reset();
     }
   };
 
@@ -108,7 +120,7 @@ class Form extends React.Component<object, FormState> {
     return (
       <div className={styles.container}>
         <p className={styles.title}> Form </p>
-        <form action="#" onSubmit={this.handleSubmit}>
+        <form action="#" ref={this.formRef} onSubmit={this.handleSubmit}>
           <fieldset>
             <legend> Name </legend>
             <input type="text" placeholder="Name" ref={this.nameRef} />
