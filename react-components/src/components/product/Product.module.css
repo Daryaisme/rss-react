@@ -1,0 +1,42 @@
+.container {
+  width: 240px;
+  margin: 0;
+  margin-bottom: 15px;
+  padding: 6px;
+  background: rgba(255, 192, 203, 0.401);
+}
+.caption {
+  font-size: 20px;
+  margin: 7px 0 5px 0;
+  cursor: pointer;
+}
+.caption:hover {
+  color: rgb(255, 108, 133);
+}
+.description {
+  color: rgba(128, 128, 128, 0.575);
+  margin-bottom: 5px;
+}
+h4 {
+  display: block;
+  float: left;
+  margin-right: 10px;
+  color: rgba(0, 0, 0, 0.562);
+}
+.container span {
+  display: block;
+  color: rgba(128, 128, 128, 0.575);
+}
+.image {
+  border: 1px rgba(128, 128, 128, 0.575) solid;
+  width: 240px;
+  height: 240px;
+  overflow: hidden;
+}
+.container img {
+  cursor: pointer;
+}
+.container img:hover {
+  transform: scale(1.2);
+  transition: all 0.5s ease-in-out;
+}

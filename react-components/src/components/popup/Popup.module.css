@@ -1,0 +1,16 @@
+.container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #ffc5cfc5;
+  transition: all 0.3s ease-in-out;
+}
+.container > div {
+  font-size: 28px;
+  color: #ffffff;
+}
